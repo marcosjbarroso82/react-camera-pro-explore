@@ -1,0 +1,1 @@
+import{w as t,p as e,v as r}from"./chunk-B7RQU5TL-BOJUz5g2.js";function n({}){return[{title:"React Camera Pro Explorer"},{name:"description",content:"Explore react-camera-pro functionality"}]}const c=t(function(){return e.jsx(r,{to:"/camera",replace:!0})});export{c as default,n as meta};

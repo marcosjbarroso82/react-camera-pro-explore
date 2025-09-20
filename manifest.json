@@ -1,0 +1,17 @@
+{
+  "name": "React Camera Pro Explorer",
+  "short_name": "Camera Pro",
+  "description": "Explore react-camera-pro functionality",
+  "start_url": "/react-camera-pro-explore/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "/react-camera-pro-explore/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
