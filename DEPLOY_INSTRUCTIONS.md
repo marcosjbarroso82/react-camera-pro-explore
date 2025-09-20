@@ -12,39 +12,57 @@
    - En "Source", selecciona "GitHub Actions"
    - El workflow ya está configurado en `.github/workflows/deploy.yml`
 
-## Deploy Automático
+## 🎯 Deploy Manual (Recomendado)
 
-El deploy se ejecuta automáticamente cuando haces push a la rama `master`:
+### **Opción 1: Desde GitHub (Más Fácil)**
+1. Ve a tu repositorio en GitHub
+2. Pestaña **"Actions"**
+3. Selecciona **"Deploy to GitHub Pages"**
+4. Botón **"Run workflow"**
+5. Selecciona la rama (master)
+6. **Run workflow**
 
+### **Opción 2: Con Tags de Versión**
 ```bash
-git add .
-git commit -m "feat: initial PWA setup"
-git push origin master
+# Crear un tag para deploy
+git tag v1.0.0
+git push origin v1.0.0
+
+# Esto automáticamente ejecutará el deploy
 ```
 
-## Deploy Manual
-
-Si quieres hacer deploy manualmente:
-
+### **Opción 3: Deploy Local (Respaldo)**
 ```bash
-# Instalar gh-pages si no está instalado
-npm install --save-dev gh-pages
+# Deploy local directo
+npm run deploy:local
 
-# Hacer build
+# O paso a paso
 npm run build
-
-# Deploy
 npm run deploy
 ```
 
-## Verificar el Deploy
+## 📋 Comandos Disponibles
+
+```bash
+# Desarrollo
+npm run dev              # Servidor de desarrollo
+npm run build            # Build para producción
+npm run start            # Servidor de producción local
+
+# Deploy
+npm run deploy:local     # Deploy local (build + deploy)
+npm run deploy:tag       # Crear tag y deploy automático
+npm run deploy           # Solo deploy (requiere build previo)
+```
+
+## ✅ Verificar el Deploy
 
 1. Ve a tu repositorio en GitHub
 2. En la pestaña "Actions" verás el workflow ejecutándose
 3. Una vez completado, tu app estará disponible en:
    `https://marcosjbarroso82.github.io/react-camera-pro-explore`
 
-## Configuración PWA
+## 🔧 Configuración PWA
 
 La app está configurada como PWA y se puede instalar en dispositivos móviles:
 
@@ -53,16 +71,23 @@ La app está configurada como PWA y se puede instalar en dispositivos móviles:
 - **Orientación:** Landscape (optimizada para móviles)
 - **Tema:** Oscuro por defecto con toggle
 
-## Estructura de la App
+## 📱 Estructura de la App
 
 - **📷 Camera:** Página principal para explorar funcionalidades de cámara
 - **🖼️ Gallery:** Galería de fotos con estadísticas
 - **⚙️ Settings:** Configuraciones de la app y cámara
 
-## Notas Importantes
+## 🎯 Ventajas del Deploy Manual
+
+- **Control total** sobre cuándo se hace deploy
+- **No deploy accidental** de código en desarrollo
+- **Deploy solo cuando esté listo** para producción
+- **Historial limpio** de releases
+
+## 📝 Notas Importantes
 
 - La app está optimizada para orientación landscape en móviles
 - El tema se persiste en localStorage
 - Los bottom tabs están optimizados para landscape
 - La app es completamente responsive y funcional como PWA
-
+- **El deploy NO es automático** - solo manual o con tags

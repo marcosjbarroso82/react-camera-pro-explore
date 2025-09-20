@@ -8,7 +8,9 @@
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build/client"
+    "deploy": "gh-pages -d build/client",
+    "deploy:tag": "git tag v$(date +%Y%m%d-%H%M%S) && git push origin --tags",
+    "deploy:local": "npm run build && npm run deploy"
   },
   "dependencies": {
     "@react-router/node": "^7.7.1",
