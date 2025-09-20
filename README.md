@@ -42,33 +42,48 @@ npm run deploy
 
 ## 🔧 Funcionalidades de Cámara
 
+### ⚠️ Limitaciones de react-camera-pro
+
+**IMPORTANTE**: Esta aplicación usa `react-camera-pro` que tiene limitaciones significativas:
+
+- ❌ **NO soporta control de resolución** (width/height)
+- ❌ **NO soporta control de calidad** de captura
+- ❌ **NO soporta control de flash, zoom, enfoque, balance de blancos, exposición**
+- ✅ **Solo soporta**: cámara frontal/trasera y relación de aspecto
+- 📷 **Resolución**: Se determina automáticamente (usualmente FullHD)
+- 🎯 **Calidad**: Fija en máxima calidad disponible
+
 ### 🎛️ Panel de Configuración
 - **Sidebar lateral** con controles de parámetros
-- **Parámetros disponibles**: Resolución, Calidad, Facing (front/back), Flash, Zoom, Focus, White balance, Exposure
+- **Parámetros disponibles**: Solo Cámara (front/back) y Relación de Aspecto
+- **Documentación clara**: Advertencias sobre limitaciones de la librería
 - **Aplicación**: Botón "Apply" para confirmar cambios
 
 ### 📱 Preview de Cámara
 - **Overlay de parámetros**: Siempre visible superpuesto sobre el preview
-- **Información en tiempo real**: Parámetros actuales mostrados en el overlay
+- **Información en tiempo real**: Solo parámetros soportados mostrados
+- **Advertencias**: Indicaciones claras sobre limitaciones
 
 ### 🏷️ Sistema de Presets
 - **Presets fijos** (no editables, no borrables):
-  - "Alta Calidad" - Máxima resolución y mejor calidad
-  - "Foto de Documento para OCR" - Optimizado para documentos
-  - "Foto de Pantalla para OCR" - Optimizado para capturas de pantalla
+  - "Paisaje (16:9)" - Relación de aspecto horizontal
+  - "Retrato (4:3)" - Relación de aspecto vertical clásica
+  - "Cuadrado (1:1)" - Relación de aspecto cuadrada
+  - "Selfie (9:16)" - Relación de aspecto vertical para selfies
 - **Presets personalizados**: Crear, guardar, nombrar y editar
 - **Clonación**: Todos los presets se pueden clonar para crear nuevos
 - **Aplicación directa**: Los presets se aplican al seleccionarlos
 
 ### 🖼️ Gestión de Fotos
 - **Almacenamiento**: localStorage para persistencia
-- **Información**: Parámetros de captura mostrados junto a cada foto
+- **Información**: Solo parámetros soportados mostrados junto a cada foto
 - **Eliminación**: Botón para borrar fotos individualmente
 
 ### 📊 Panel de Información de Cámara
 - **Panel separado** con información técnica
-- **Información básica**: Tipo de cámara, resoluciones disponibles, capacidades
-- **Información técnica**: Apertura, ISO, etc. (si está disponible)
+- **Información básica**: Tipo de cámara y orientación
+- **Limitaciones documentadas**: Advertencias sobre capacidades no disponibles
+- **Resolución**: Información sobre resolución automática
 
 ## 🔧 Configuración
 

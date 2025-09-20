@@ -8,53 +8,42 @@ import { PhotoGallery } from './PhotoGallery';
 import { CameraOverlay } from './CameraOverlay';
 
 const FIXED_PRESETS: FixedPresets = {
-  'high-quality': {
-    id: 'high-quality',
-    name: 'Alta Calidad',
+  'landscape': {
+    id: 'landscape',
+    name: 'Paisaje (16:9)',
     parameters: {
-      width: 1920,
-      height: 1080,
-      quality: 0.9,
       facing: 'back',
-      flash: 'auto',
-      zoom: 1,
-      focus: 'auto',
-      whiteBalance: 'auto',
-      exposure: 0
+      aspectRatio: 16/9
     },
     isFixed: true,
     isEditable: false
   },
-  'document-ocr': {
-    id: 'document-ocr',
-    name: 'Foto de Documento para OCR',
+  'portrait': {
+    id: 'portrait',
+    name: 'Retrato (4:3)',
     parameters: {
-      width: 1920,
-      height: 1080,
-      quality: 0.95,
       facing: 'back',
-      flash: 'on',
-      zoom: 1,
-      focus: 'manual',
-      whiteBalance: 'auto',
-      exposure: 0.2
+      aspectRatio: 4/3
     },
     isFixed: true,
     isEditable: false
   },
-  'screen-ocr': {
-    id: 'screen-ocr',
-    name: 'Foto de Pantalla para OCR',
+  'square': {
+    id: 'square',
+    name: 'Cuadrado (1:1)',
     parameters: {
-      width: 1920,
-      height: 1080,
-      quality: 0.9,
       facing: 'back',
-      flash: 'off',
-      zoom: 1,
-      focus: 'auto',
-      whiteBalance: 'auto',
-      exposure: -0.2
+      aspectRatio: 1
+    },
+    isFixed: true,
+    isEditable: false
+  },
+  'selfie': {
+    id: 'selfie',
+    name: 'Selfie (9:16)',
+    parameters: {
+      facing: 'front',
+      aspectRatio: 9/16
     },
     isFixed: true,
     isEditable: false
@@ -63,15 +52,8 @@ const FIXED_PRESETS: FixedPresets = {
 
 export default function CameraExplorer() {
   const [cameraParameters, setCameraParameters] = useState<CameraParameters>({
-    width: 1920,
-    height: 1080,
-    quality: 0.8,
     facing: 'back',
-    flash: 'auto',
-    zoom: 1,
-    focus: 'auto',
-    whiteBalance: 'auto',
-    exposure: 0
+    aspectRatio: 16/9
   });
 
   const [cameraInfo, setCameraInfo] = useState<CameraInfo | null>(null);
@@ -286,7 +268,7 @@ export default function CameraExplorer() {
           <Camera
             ref={cameraRef}
             facingMode={cameraParameters.facing as 'user' | 'environment'}
-            aspectRatio={cameraParameters.width / cameraParameters.height}
+            aspectRatio={cameraParameters.aspectRatio}
             errorMessages={{
               noCameraAccessible: 'No se puede acceder a la cámara',
               permissionDenied: 'Permiso denegado para acceder a la cámara',

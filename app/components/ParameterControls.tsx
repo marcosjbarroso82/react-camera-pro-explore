@@ -13,52 +13,15 @@ export function ParameterControls({ parameters, onParameterChange, onApply }: Pa
 
   return (
     <div className="space-y-6">
-      {/* Resolution */}
-      <div>
-        <label className="block text-sm font-medium mb-2">Resolución</label>
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <label className="block text-xs text-slate-600 dark:text-slate-400 mb-1">Ancho</label>
-            <input
-              type="number"
-              value={parameters.width}
-              onChange={(e) => handleChange('width', parseInt(e.target.value))}
-              className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded text-sm bg-white dark:bg-slate-700"
-              min="320"
-              max="4096"
-            />
-          </div>
-          <div>
-            <label className="block text-xs text-slate-600 dark:text-slate-400 mb-1">Alto</label>
-            <input
-              type="number"
-              value={parameters.height}
-              onChange={(e) => handleChange('height', parseInt(e.target.value))}
-              className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded text-sm bg-white dark:bg-slate-700"
-              min="240"
-              max="2160"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Quality */}
-      <div>
-        <label className="block text-sm font-medium mb-2">Calidad</label>
-        <input
-          type="range"
-          min="0.1"
-          max="1"
-          step="0.1"
-          value={parameters.quality}
-          onChange={(e) => handleChange('quality', parseFloat(e.target.value))}
-          className="w-full"
-        />
-        <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mt-1">
-          <span>Baja</span>
-          <span>{Math.round(parameters.quality * 100)}%</span>
-          <span>Alta</span>
-        </div>
+      {/* Información sobre limitaciones */}
+      <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+        <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200 mb-2">
+          ⚠️ Limitaciones de react-camera-pro
+        </h3>
+        <p className="text-xs text-yellow-700 dark:text-yellow-300">
+          Esta librería solo soporta cámara frontal/trasera y relación de aspecto. 
+          No permite control de resolución, calidad, flash, zoom, enfoque, balance de blancos o exposición.
+        </p>
       </div>
 
       {/* Facing */}
@@ -74,82 +37,34 @@ export function ParameterControls({ parameters, onParameterChange, onApply }: Pa
         </select>
       </div>
 
-      {/* Flash */}
+      {/* Aspect Ratio */}
       <div>
-        <label className="block text-sm font-medium mb-2">Flash</label>
+        <label className="block text-sm font-medium mb-2">Relación de Aspecto</label>
         <select
-          value={parameters.flash}
-          onChange={(e) => handleChange('flash', e.target.value as 'auto' | 'on' | 'off')}
+          value={parameters.aspectRatio}
+          onChange={(e) => handleChange('aspectRatio', parseFloat(e.target.value))}
           className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded text-sm bg-white dark:bg-slate-700"
         >
-          <option value="auto">Automático</option>
-          <option value="on">Encendido</option>
-          <option value="off">Apagado</option>
+          <option value={16/9}>16:9 (Paisaje)</option>
+          <option value={4/3}>4:3 (Retrato)</option>
+          <option value={1}>1:1 (Cuadrado)</option>
+          <option value={9/16}>9:16 (Vertical)</option>
+          <option value={3/2}>3:2 (Clásica)</option>
         </select>
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+          Actual: {parameters.aspectRatio.toFixed(2)}:1
+        </p>
       </div>
 
-      {/* Zoom */}
-      <div>
-        <label className="block text-sm font-medium mb-2">Zoom</label>
-        <input
-          type="range"
-          min="1"
-          max="5"
-          step="0.1"
-          value={parameters.zoom}
-          onChange={(e) => handleChange('zoom', parseFloat(e.target.value))}
-          className="w-full"
-        />
-        <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mt-1">
-          <span>1x</span>
-          <span>{parameters.zoom.toFixed(1)}x</span>
-          <span>5x</span>
-        </div>
-      </div>
-
-      {/* Focus */}
-      <div>
-        <label className="block text-sm font-medium mb-2">Enfoque</label>
-        <select
-          value={parameters.focus}
-          onChange={(e) => handleChange('focus', e.target.value as 'auto' | 'manual')}
-          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded text-sm bg-white dark:bg-slate-700"
-        >
-          <option value="auto">Automático</option>
-          <option value="manual">Manual</option>
-        </select>
-      </div>
-
-      {/* White Balance */}
-      <div>
-        <label className="block text-sm font-medium mb-2">Balance de Blancos</label>
-        <select
-          value={parameters.whiteBalance}
-          onChange={(e) => handleChange('whiteBalance', e.target.value as 'auto' | 'manual')}
-          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded text-sm bg-white dark:bg-slate-700"
-        >
-          <option value="auto">Automático</option>
-          <option value="manual">Manual</option>
-        </select>
-      </div>
-
-      {/* Exposure */}
-      <div>
-        <label className="block text-sm font-medium mb-2">Exposición</label>
-        <input
-          type="range"
-          min="-2"
-          max="2"
-          step="0.1"
-          value={parameters.exposure}
-          onChange={(e) => handleChange('exposure', parseFloat(e.target.value))}
-          className="w-full"
-        />
-        <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400 mt-1">
-          <span>-2</span>
-          <span>{parameters.exposure.toFixed(1)}</span>
-          <span>+2</span>
-        </div>
+      {/* Información sobre resolución */}
+      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+        <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-1">
+          📷 Resolución de Captura
+        </h4>
+        <p className="text-xs text-blue-700 dark:text-blue-300">
+          La resolución se determina automáticamente por la cámara (usualmente FullHD o máxima disponible).
+          No es configurable con esta librería.
+        </p>
       </div>
 
       {/* Apply Button */}

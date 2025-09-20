@@ -40,47 +40,63 @@ export function CameraInfoPanel({ cameraInfo, onCameraInfoUpdate }: CameraInfoPa
         </div>
       </div>
 
-      {/* Capabilities */}
+      {/* Capabilities - Limited by react-camera-pro */}
       <div className="bg-slate-50 dark:bg-slate-700 rounded-lg p-4">
         <h3 className="font-semibold mb-3">Capacidades</h3>
+        <div className="mb-3 p-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs">
+          <p className="text-yellow-800 dark:text-yellow-200">
+            ⚠️ react-camera-pro no expone estas capacidades. Solo se muestran para referencia.
+          </p>
+        </div>
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${cameraInfo.capabilities.flash ? 'bg-green-500' : 'bg-red-500'}`}></span>
-            <span>Flash</span>
+            <span className="w-2 h-2 rounded-full bg-gray-400"></span>
+            <span className="text-slate-500">Flash (N/A)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${cameraInfo.capabilities.zoom ? 'bg-green-500' : 'bg-red-500'}`}></span>
-            <span>Zoom</span>
+            <span className="w-2 h-2 rounded-full bg-gray-400"></span>
+            <span className="text-slate-500">Zoom (N/A)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${cameraInfo.capabilities.focus ? 'bg-green-500' : 'bg-red-500'}`}></span>
-            <span>Enfoque</span>
+            <span className="w-2 h-2 rounded-full bg-gray-400"></span>
+            <span className="text-slate-500">Enfoque (N/A)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${cameraInfo.capabilities.whiteBalance ? 'bg-green-500' : 'bg-red-500'}`}></span>
-            <span>Balance Blancos</span>
+            <span className="w-2 h-2 rounded-full bg-gray-400"></span>
+            <span className="text-slate-500">Balance Blancos (N/A)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${cameraInfo.capabilities.exposure ? 'bg-green-500' : 'bg-red-500'}`}></span>
-            <span>Exposición</span>
+            <span className="w-2 h-2 rounded-full bg-gray-400"></span>
+            <span className="text-slate-500">Exposición (N/A)</span>
           </div>
         </div>
       </div>
 
-      {/* Supported Resolutions */}
+      {/* Supported Resolutions - Limited by react-camera-pro */}
       <div className="bg-slate-50 dark:bg-slate-700 rounded-lg p-4">
         <h3 className="font-semibold mb-3">Resoluciones Soportadas</h3>
-        <div className="space-y-1 max-h-32 overflow-y-auto">
-          {cameraInfo.supportedResolutions.map((resolution, index) => (
-            <div key={index} className="flex justify-between text-sm">
-              <span className="text-slate-600 dark:text-slate-400">
-                {resolution.width} × {resolution.height}
-              </span>
-              <span className="text-slate-500 dark:text-slate-500">
-                {Math.round((resolution.width * resolution.height) / 1000000 * 10) / 10}MP
-              </span>
-            </div>
-          ))}
+        <div className="mb-3 p-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs">
+          <p className="text-yellow-800 dark:text-yellow-200">
+            ⚠️ react-camera-pro usa resolución automática (usualmente FullHD)
+          </p>
+        </div>
+        <div className="space-y-1">
+          <div className="flex justify-between text-sm">
+            <span className="text-slate-600 dark:text-slate-400">
+              Resolución Actual:
+            </span>
+            <span className="text-slate-500 dark:text-slate-500">
+              Auto (FullHD)
+            </span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-slate-600 dark:text-slate-400">
+              Control Manual:
+            </span>
+            <span className="text-red-500">
+              No Disponible
+            </span>
+          </div>
         </div>
       </div>
 
