@@ -4,7 +4,10 @@ const urlsToCache = [
   '/camera',
   '/settings',
   '/gallery',
-  '/app.css'
+  '/manifest.json',
+  '/favicon.ico',
+  '/index.html',
+  '/404.html'
 ];
 
 self.addEventListener('install', (event) => {
@@ -26,4 +29,3 @@ self.addEventListener('fetch', (event) => {
     )
   );
 });
-

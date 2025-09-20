@@ -79,10 +79,36 @@ Si ves un 404 al navegar a rutas como `/camera` o `/settings`:
 
 3. **Espera 5-10 minutos** para que GitHub Pages actualice
 
+### **Página en Blanco o Error de Manifest**
+Si ves una página en blanco o errores de manifest.json:
+
+1. **Verifica la configuración de Vite:**
+   - `vite.config.ts` está configurado para copiar archivos públicos ✅
+   - `publicDir: 'public'` está configurado ✅
+
+2. **Verifica que los archivos estén en public/:**
+   - `public/manifest.json` ✅
+   - `public/sw.js` ✅
+   - `public/favicon.ico` ✅
+
+3. **Haz un build limpio:**
+   ```bash
+   rm -rf build/
+   npm run build
+   npm run deploy
+   ```
+
+4. **Verifica en la consola del navegador:**
+   - Abre DevTools (F12)
+   - Ve a la pestaña Network
+   - Recarga la página
+   - Verifica que manifest.json se cargue correctamente
+
 ### **La App No Carga**
 - Verifica que el build sea exitoso
 - Revisa la consola del navegador para errores
 - Asegúrate de que el manifest.json esté accesible
+- Verifica que no haya errores de CORS
 
 ## 🔧 Configuración PWA
 
@@ -114,3 +140,4 @@ La app está configurada como PWA y se puede instalar en dispositivos móviles:
 - La app es completamente responsive y funcional como PWA
 - **El deploy NO es automático** - solo manual o con tags
 - **Archivos 404.html y .nojekyll** están incluidos para GitHub Pages
+- **Vite está configurado** para copiar archivos públicos correctamente

@@ -38,6 +38,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="apple-mobile-web-app-title" content="Camera Pro" />
         <Meta />
         <Links />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Single Page Apps for GitHub Pages
+              (function(l) {
+                if (l.search[1] === '/' ) {
+                  var decoded = l.search.slice(1).split('&').map(function(s) { 
+                    return s.replace(/~and~/g, '&')
+                  }).join('?');
+                  window.history.replaceState(null, null,
+                      l.pathname.slice(0, -1) + decoded + l.hash
+                  );
+                }
+              }(window.location))
+            `,
+          }}
+        />
       </head>
       <body>
         <ThemeProvider>
@@ -45,7 +62,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
-        <script src="/sw.js"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Register service worker
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                      console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                      console.log('SW registration failed: ', registrationError);
+                    });
+                });
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   );
