@@ -7,10 +7,11 @@
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "predeploy": "npm run build",
+    "predeploy": "echo 'Build already done'",
     "deploy": "gh-pages -d build/client",
     "deploy:tag": "git tag v$(date +%Y%m%d-%H%M%S) && git push origin --tags",
-    "deploy:local": "npm run build && npm run deploy"
+    "deploy:local": "npm run build && npm run deploy",
+    "debug": "node debug-deploy.js"
   },
   "dependencies": {
     "@react-router/node": "^7.7.1",
