@@ -84,28 +84,42 @@ export default function CameraExplorer() {
 
   // Load photos and custom presets from localStorage on mount
   useEffect(() => {
-    const savedPhotos = localStorage.getItem('camera-photos');
-    if (savedPhotos) {
-      try {
-        setPhotos(JSON.parse(savedPhotos));
-      } catch (error) {
-        console.error('Error loading photos from localStorage:', error);
+    // Load photos
+    try {
+      const savedPhotos = localStorage.getItem('camera-photos');
+      if (savedPhotos) {
+        const parsedPhotos = JSON.parse(savedPhotos);
+        if (Array.isArray(parsedPhotos) && parsedPhotos.length > 0) {
+          setPhotos(parsedPhotos);
+        }
       }
+    } catch (error) {
+      console.error('Error loading photos from localStorage:', error);
+      localStorage.removeItem('camera-photos');
     }
 
-    const savedPresets = localStorage.getItem('camera-presets');
-    if (savedPresets) {
-      try {
-        setCustomPresets(JSON.parse(savedPresets));
-      } catch (error) {
-        console.error('Error loading presets from localStorage:', error);
+    // Load presets
+    try {
+      const savedPresets = localStorage.getItem('camera-presets');
+      if (savedPresets) {
+        const parsedPresets = JSON.parse(savedPresets);
+        if (Array.isArray(parsedPresets)) {
+          setCustomPresets(parsedPresets);
+        }
       }
+    } catch (error) {
+      console.error('Error loading presets from localStorage:', error);
+      localStorage.removeItem('camera-presets');
     }
   }, []);
 
   // Save photos to localStorage whenever photos change
   useEffect(() => {
-    localStorage.setItem('camera-photos', JSON.stringify(photos));
+    try {
+      localStorage.setItem('camera-photos', JSON.stringify(photos));
+    } catch (error) {
+      console.error('Error saving photos to localStorage:', error);
+    }
   }, [photos]);
 
   // Save custom presets to localStorage whenever they change
@@ -150,27 +164,31 @@ export default function CameraExplorer() {
 
   const handleCapturePhoto = () => {
     if (cameraRef.current && cameraRef.current.takePhoto) {
-      const image = cameraRef.current.takePhoto('base64url');
-      const newPhoto: PhotoData = {
-        id: `photo-${Date.now()}`,
-        dataUrl: image,
-        timestamp: Date.now(),
-        parameters: { ...cameraParameters },
-        cameraInfo: cameraInfo || {
-          deviceId: 'unknown',
-          label: 'Unknown Camera',
-          facing: cameraParameters.facing,
-          capabilities: {
-            flash: true,
-            zoom: true,
-            focus: true,
-            whiteBalance: true,
-            exposure: true
-          },
-          supportedResolutions: [{ width: 1920, height: 1080 }]
-        }
-      };
-      setPhotos(prev => [newPhoto, ...prev]);
+      try {
+        const image = cameraRef.current.takePhoto('base64url');
+        const newPhoto: PhotoData = {
+          id: `photo-${Date.now()}`,
+          dataUrl: image,
+          timestamp: Date.now(),
+          parameters: { ...cameraParameters },
+          cameraInfo: cameraInfo || {
+            deviceId: 'unknown',
+            label: 'Unknown Camera',
+            facing: cameraParameters.facing,
+            capabilities: {
+              flash: true,
+              zoom: true,
+              focus: true,
+              whiteBalance: true,
+              exposure: true
+            },
+            supportedResolutions: [{ width: 1920, height: 1080 }]
+          }
+        };
+        setPhotos(prev => [newPhoto, ...prev]);
+      } catch (error) {
+        console.error('Error capturing photo:', error);
+      }
     }
   };
 
