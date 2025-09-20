@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { PhotoData } from '../types/camera';
 
 interface PhotoGalleryProps {
@@ -8,10 +8,58 @@ interface PhotoGalleryProps {
 
 export function PhotoGallery({ photos, onDeletePhoto }: PhotoGalleryProps) {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoData | null>(null);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState<number>(0);
 
   const formatTimestamp = (timestamp: number) => {
     return new Date(timestamp).toLocaleString();
   };
+
+  const handlePhotoClick = (photo: PhotoData) => {
+    const index = photos.findIndex(p => p.id === photo.id);
+    setCurrentPhotoIndex(index);
+    setSelectedPhoto(photo);
+  };
+
+  const handlePreviousPhoto = () => {
+    if (currentPhotoIndex > 0) {
+      const newIndex = currentPhotoIndex - 1;
+      setCurrentPhotoIndex(newIndex);
+      setSelectedPhoto(photos[newIndex]);
+    }
+  };
+
+  const handleNextPhoto = () => {
+    if (currentPhotoIndex < photos.length - 1) {
+      const newIndex = currentPhotoIndex + 1;
+      setCurrentPhotoIndex(newIndex);
+      setSelectedPhoto(photos[newIndex]);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPhoto(null);
+    setCurrentPhotoIndex(0);
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!selectedPhoto) return;
+      
+      if (event.key === 'ArrowLeft') {
+        handlePreviousPhoto();
+      } else if (event.key === 'ArrowRight') {
+        handleNextPhoto();
+      } else if (event.key === 'Escape') {
+        handleCloseModal();
+      }
+    };
+
+    if (selectedPhoto) {
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [selectedPhoto, currentPhotoIndex, photos.length]);
 
   const formatParameters = (parameters: PhotoData['parameters']) => {
     return {
@@ -56,7 +104,7 @@ export function PhotoGallery({ photos, onDeletePhoto }: PhotoGalleryProps) {
                   src={photo.dataUrl}
                   alt={`Foto capturada ${photo.id}`}
                   className="w-full h-32 object-cover rounded cursor-pointer hover:opacity-90 transition-opacity"
-                  onClick={() => setSelectedPhoto(photo)}
+                  onClick={() => handlePhotoClick(photo)}
                 />
               </div>
 
@@ -109,27 +157,74 @@ export function PhotoGallery({ photos, onDeletePhoto }: PhotoGalleryProps) {
       {/* Photo Detail Modal */}
       {selectedPhoto && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-slate-800 rounded-lg max-w-2xl max-h-full overflow-auto">
+          <div className="bg-white dark:bg-slate-800 rounded-lg max-w-4xl max-h-full overflow-auto">
             <div className="p-4">
               {/* Header */}
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">Detalles de la Foto</h3>
+                <h3 className="text-lg font-semibold">
+                  Detalles de la Foto ({currentPhotoIndex + 1} de {photos.length})
+                </h3>
                 <button
-                  onClick={() => setSelectedPhoto(null)}
+                  onClick={handleCloseModal}
                   className="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
                 >
                   ✕
                 </button>
               </div>
 
-              {/* Photo */}
-              <div className="mb-4">
+              {/* Photo with Navigation */}
+              <div className="relative mb-4">
                 <img
                   src={selectedPhoto.dataUrl}
                   alt="Foto detallada"
                   className="w-full max-h-96 object-contain rounded"
                 />
+                
+                {/* Navigation Arrows */}
+                {photos.length > 1 && (
+                  <>
+                    {/* Previous Button */}
+                    {currentPhotoIndex > 0 && (
+                      <button
+                        onClick={handlePreviousPhoto}
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all"
+                      >
+                        ←
+                      </button>
+                    )}
+                    
+                    {/* Next Button */}
+                    {currentPhotoIndex < photos.length - 1 && (
+                      <button
+                        onClick={handleNextPhoto}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all"
+                      >
+                        →
+                      </button>
+                    )}
+                  </>
+                )}
               </div>
+
+              {/* Photo Navigation Dots */}
+              {photos.length > 1 && (
+                <div className="flex justify-center space-x-2 mb-4">
+                  {photos.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setCurrentPhotoIndex(index);
+                        setSelectedPhoto(photos[index]);
+                      }}
+                      className={`w-3 h-3 rounded-full transition-all ${
+                        index === currentPhotoIndex
+                          ? 'bg-blue-600'
+                          : 'bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
 
               {/* Parameters */}
               <div className="space-y-3">
