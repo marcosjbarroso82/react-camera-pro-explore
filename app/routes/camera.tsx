@@ -5,7 +5,7 @@ export default function Camera() {
     <Layout>
       <div className="p-4 h-full">
         <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6 h-full">
-          <h1 className="text-2xl font-bold mb-6 text-center">📷 Camera Explorer</h1>
+          <h1 className="text-2xl font-bold mb-6 text-center">📷 Camera Explorer!</h1>
           
           {/* Camera preview area - landscape optimized */}
           <div className="bg-slate-100 dark:bg-slate-700 rounded-lg p-8 mb-6 h-64 flex items-center justify-center">
