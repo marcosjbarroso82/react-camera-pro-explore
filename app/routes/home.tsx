@@ -1,13 +1,14 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { Navigate } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "React Camera Pro Explorer" },
+    { name: "description", content: "Explore react-camera-pro functionality" },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  // Redirect to camera page as the main entry point
+  return <Navigate to="/camera" replace />;
 }
