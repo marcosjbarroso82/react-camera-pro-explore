@@ -62,6 +62,28 @@ npm run deploy           # Solo deploy (requiere build previo)
 3. Una vez completado, tu app estará disponible en:
    `https://marcosjbarroso82.github.io/react-camera-pro-explore`
 
+## 🔧 Solución de Problemas
+
+### **Error 404 en Rutas**
+Si ves un 404 al navegar a rutas como `/camera` o `/settings`:
+
+1. **Verifica que los archivos estén incluidos:**
+   - `public/404.html` ✅
+   - `public/.nojekyll` ✅
+   - `public/index.html` ✅
+
+2. **Haz un nuevo deploy:**
+   ```bash
+   npm run deploy:local
+   ```
+
+3. **Espera 5-10 minutos** para que GitHub Pages actualice
+
+### **La App No Carga**
+- Verifica que el build sea exitoso
+- Revisa la consola del navegador para errores
+- Asegúrate de que el manifest.json esté accesible
+
 ## 🔧 Configuración PWA
 
 La app está configurada como PWA y se puede instalar en dispositivos móviles:
@@ -91,3 +113,4 @@ La app está configurada como PWA y se puede instalar en dispositivos móviles:
 - Los bottom tabs están optimizados para landscape
 - La app es completamente responsive y funcional como PWA
 - **El deploy NO es automático** - solo manual o con tags
+- **Archivos 404.html y .nojekyll** están incluidos para GitHub Pages
