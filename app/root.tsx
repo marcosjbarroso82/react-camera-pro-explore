@@ -22,8 +22,8 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
-  { rel: "manifest", href: "/manifest.json" },
-  { rel: "icon", href: "/favicon.ico" },
+  { rel: "manifest", href: "/react-camera-pro-explore/manifest.json" },
+  { rel: "icon", href: "/react-camera-pro-explore/favicon.ico" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -68,7 +68,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               // Register service worker
               if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js')
+                  navigator.serviceWorker.register('/react-camera-pro-explore/sw.js')
                     .then(function(registration) {
                       console.log('SW registered: ', registration);
                     })
