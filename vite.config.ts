@@ -6,6 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   publicDir: 'public',
+  base: '/react-camera-pro-explore/',
   build: {
     outDir: 'build/client',
     assetsDir: 'assets',
